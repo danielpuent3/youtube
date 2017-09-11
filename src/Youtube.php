@@ -395,13 +395,11 @@ class Youtube
 
         if($this->client->isAccessTokenExpired())
         {
-            $accessToken = json_decode($accessToken);
-
             // If we have a "refresh_token"
-            if(property_exists($accessToken, 'refresh_token'))
+            if (array_key_exists('refresh_token', $accessToken))
             {
                 // Refresh the access token
-                $this->client->refreshToken($accessToken->refresh_token);
+                $this->client->refreshToken($accessToken['refresh_token']);
 
                 // Save the access token
                 $this->saveAccessTokenToDB($this->client->getAccessToken());
