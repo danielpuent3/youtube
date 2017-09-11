@@ -71,6 +71,27 @@ class Youtube
     }
 
     /**
+     * Get video details
+     *
+     * @param $id
+     * @param string $part
+     * @return \Google_Service_YouTube_VideoListResponse
+     * @throws Exception
+     */
+    public function details($id, $part = 'snippet')
+    {
+        $this->handleAccessToken();
+
+        if (!$this->exists($id)) {
+            throw new Exception('A video matching id "'. $id .'" could not be found.');
+        }
+
+        $response = $this->youtube->videos->listVideos($part, ['id' => $id]);
+
+        return $response->items[0];
+    }
+
+    /**
      * Upload the video to YouTube
      *
      * @param  string $path
