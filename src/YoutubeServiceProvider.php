@@ -38,6 +38,8 @@ class YoutubeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(Youtube::class, 'youtube');
+
         $this->app->singleton('youtube', function($app) {
             return new Youtube($app, new \Google_Client);
         });
